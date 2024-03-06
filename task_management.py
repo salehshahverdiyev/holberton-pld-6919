@@ -5,7 +5,7 @@ import cmd
 class Task:
     task_id = 0
 
-    def __init__(self, title : str, description : str, completed : bool = False):
+    def __init__(self, title: str, description: str, completed: bool = False):
         Task.task_id += 1
         self.title = title
         self.description = description
@@ -18,8 +18,9 @@ class Task:
     def __str__(self):
         return f"{self.task_idd} {self.description} {self.completed}"
 
+
 class TaskManager:
-    def __init__(self, tasks : dict = {}):
+    def __init__(self, tasks: dict = {}):
         self.tasks = tasks
 
     def add_task(self, title, description):
@@ -41,13 +42,14 @@ class TaskManager:
             if key == int(task_idd):
                 return value
 
+
 class CLI(cmd.Cmd):
     manager = TaskManager()
 
     def do_add(self, arg):
         parser = argparse.ArgumentParser(description='What the program does')
-        parser.add_argument('--title',help='title of task')
-        parser.add_argument('--desc',help='desc of task')
+        parser.add_argument('--title', help='title of task')
+        parser.add_argument('--desc', help='desc of task')
         args = parser.parse_args(arg.split())
         CLI.manager.add_task(args.title, args.desc)
 
@@ -56,21 +58,22 @@ class CLI(cmd.Cmd):
 
     def do_find(self, arg):
         parser = argparse.ArgumentParser(description='What the program does')
-        parser.add_argument('--id',help='id of task')
+        parser.add_argument('--id', help='id of task')
         args = parser.parse_args(arg.split())
         print(CLI.manager.find_task(args.id))
 
     def do_remove(self, arg):
         parser = argparse.ArgumentParser(description='What the program does')
-        parser.add_argument('--id',help='id of task')
+        parser.add_argument('--id', help='id of task')
         args = parser.parse_args(arg.split())
         CLI.manager.remove_task(args.id)
 
     def do_complete(self, arg):
         parser = argparse.ArgumentParser(description='What the program does')
-        parser.add_argument('--id',help='id of task')
+        parser.add_argument('--id', help='id of task')
         args = parser.parse_args(arg.split())
         CLI.manager.mark_task_completed(args.id)
+
 
 if __name__ == "__main__":
     CLI().cmdloop()
